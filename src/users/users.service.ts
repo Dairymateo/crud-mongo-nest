@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -18,15 +18,19 @@ export class UsersService {
     return this.userModel.find();
   }
 
-  findOne(id: string) {
-    return this.userModel.findById(id);
+  async findOne(id: string) {
+    const user = await this.userModel.findById(id).exec();
+    if (user) return user;
+    return new HttpException('User not found', 404);
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
     return this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  remove(id: string) {
-    return this.userModel.findByIdAndDelete(id);
+  async remove(id: string) {
+    const user = await this.userModel.findByIdAndDelete(id).exec();
+    if (user) return user;
+    return new HttpException('User not found', 404);
   }
 }
