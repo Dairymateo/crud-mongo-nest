@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable prettier/prettier */
+
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateUserDto {
@@ -9,4 +10,18 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsNumber()
   age: number;
+
+
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+
+
+
 }
